@@ -29,8 +29,11 @@ class TestUntitled():
                              homepage="https://software-testing.ru/"))
         self.fill_birthday_info()
         self.fill_anniversary_info()
-        self.open_home_page()
+        self.back_to_homepage()
         self.logout()
+
+    def back_to_homepage(self):
+        self.wd.find_element(By.LINK_TEXT, "home page").click()
 
     def open_home_page(self):
         self.wd.get("https://localhost/addressbook/")
