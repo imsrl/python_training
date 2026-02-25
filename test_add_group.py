@@ -19,20 +19,41 @@ class TestTestaddgroup():
     self.wd.quit()
   
   def test_testaddgroup(self):
-    self.wd.get("https://localhost/addressbook/")
-    self.wd.set_window_size(1006, 892)
-    self.wd.find_element(By.NAME, "user").click()
-    self.wd.find_element(By.NAME, "user").send_keys("admin")
-    self.wd.find_element(By.NAME, "pass").send_keys("secret")
-    self.wd.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
-    self.wd.find_element(By.LINK_TEXT, "groups").click()
+    self.open_home_page()
+    self.login()
+    self.open_groups_page()
+    self.create_group()
+    self.return_to_groups_page()
+    self.logout()
+
+  def logout(self):
+    self.wd.find_element(By.LINK_TEXT, "Logout").click()
+    self.wd.find_element(By.CSS_SELECTOR, "html").click()
+
+  def return_to_groups_page(self):
+    self.wd.find_element(By.LINK_TEXT, "group page").click()
+
+  def create_group(self):
+    # init group creation
     self.wd.find_element(By.NAME, "new").click()
+    # fill group form
     self.wd.find_element(By.NAME, "group_name").click()
     self.wd.find_element(By.NAME, "group_name").send_keys("group_name1")
     self.wd.find_element(By.NAME, "group_header").send_keys("group header")
     self.wd.find_element(By.NAME, "group_footer").send_keys("group footer")
+    # submit group creation
     self.wd.find_element(By.NAME, "submit").click()
-    self.wd.find_element(By.LINK_TEXT, "group page").click()
-    self.wd.find_element(By.LINK_TEXT, "Logout").click()
-    self.wd.find_element(By.CSS_SELECTOR, "html").click()
+
+  def open_groups_page(self):
+    self.wd.find_element(By.LINK_TEXT, "groups").click()
+
+  def login(self):
+    self.wd.find_element(By.NAME, "user").click()
+    self.wd.find_element(By.NAME, "user").send_keys("admin")
+    self.wd.find_element(By.NAME, "pass").send_keys("secret")
+    self.wd.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
+
+  def open_home_page(self):
+    self.wd.get("https://localhost/addressbook/")
+    self.wd.set_window_size(1006, 892)
   
