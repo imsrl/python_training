@@ -1,9 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from contact import ContactInfo
-from contact import CompanyInfo
-from contact import PhoneInfo
-from contact import EmailAndSiteInfo
 
 
 class TestUntitled():
@@ -20,15 +17,10 @@ class TestUntitled():
         self.add_new_contact()
         self.fill_contact_info(
             ContactInfo(firstname="oleg", middlename="olegovich", lastname="olegovskiy", nickname="LEGO",
-                        title="UUUU"))
-        self.fill_company_info(
-            CompanyInfo(company="Roga and Kopyta", address="Planet Earth, Country Russia, City Novosibirsk"))
-        self.fill_phone_info(PhoneInfo(home="83842021244", mobile="89039932131", work="83842101011"))
-        self.fill_email_and_site_info(
-            EmailAndSiteInfo(email="oleg@mail.ru", email2="olego12@mail.ru", email3="internationaloleg@gmail.com",
-                             homepage="https://software-testing.ru/"))
-        self.fill_birthday_info()
-        self.fill_anniversary_info()
+                        title="UUUU", company="Roga and Kopyta", address="Planet Earth, Country Russia, City Novosibirsk",
+                        home="83842021244", mobile="89039932131", work="83842101011",
+                        email="oleg@mail.ru", email2="olego12@mail.ru", email3="internationaloleg@gmail.com",
+                        homepage="https://software-testing.ru/"))
         self.back_to_homepage()
         self.logout()
 
@@ -53,23 +45,15 @@ class TestUntitled():
         self.wd.find_element(By.NAME, "lastname").send_keys(contact.lastname)
         self.wd.find_element(By.NAME, "nickname").send_keys(contact.nickname)
         self.wd.find_element(By.NAME, "title").send_keys(contact.title)
-
-    def fill_company_info(self, contact):
         self.wd.find_element(By.NAME, "company").send_keys(contact.company)
         self.wd.find_element(By.NAME, "address").send_keys(contact.address)
-
-    def fill_phone_info(self, contact):
         self.wd.find_element(By.NAME, "home").send_keys(contact.home)
         self.wd.find_element(By.NAME, "mobile").send_keys(contact.mobile)
         self.wd.find_element(By.NAME, "work").send_keys(contact.work)
-
-    def fill_email_and_site_info(self, contact):
         self.wd.find_element(By.NAME, "email").send_keys(contact.email)
         self.wd.find_element(By.NAME, "email2").send_keys(contact.email2)
         self.wd.find_element(By.NAME, "email3").send_keys(contact.email3)
         self.wd.find_element(By.NAME, "homepage").send_keys(contact.homepage)
-
-    def fill_birthday_info(self):
         dropdown = self.wd.find_element(By.NAME, "bday")
         dropdown.find_element(By.XPATH, "//option[. = '24']").click()
         self.wd.find_element(By.CSS_SELECTOR, "select:nth-child(58) > option:nth-child(26)").click()
@@ -77,8 +61,6 @@ class TestUntitled():
         dropdown.find_element(By.XPATH, "//option[. = 'November']").click()
         self.wd.find_element(By.CSS_SELECTOR, "select:nth-child(59) > option:nth-child(12)").click()
         self.wd.find_element(By.NAME, "byear").send_keys("1991")
-
-    def fill_anniversary_info(self):
         dropdown = self.wd.find_element(By.NAME, "aday")
         dropdown.find_element(By.XPATH, "//option[. = '13']").click()
         self.wd.find_element(By.CSS_SELECTOR, "select:nth-child(63) > option:nth-child(15)").click()
