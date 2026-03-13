@@ -2,6 +2,7 @@ from group import Group
 from application import Application
 import pytest
 
+
 @pytest.fixture()
 def app(request):
     fixture = Application()
