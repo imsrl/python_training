@@ -1,6 +1,6 @@
 class ContactInfo:
     def __init__(self, firstname, middlename, lastname, nickname, title, company, address, home, mobile, work, email,
-                 email2, email3,homepage):
+                 email2, email3, homepage):
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
@@ -15,5 +15,3 @@ class ContactInfo:
         self.email2 = email2
         self.email3 = email3
         self.homepage = homepage
-
-
