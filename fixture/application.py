@@ -1,4 +1,5 @@
 from selenium import webdriver
+from fixture.session import SessionHelper
 from selenium.webdriver.common.by import By
 
 class Application:
@@ -6,13 +7,11 @@ class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.vars = {}
+        self.session = SessionHelper(self)
 
-    def logout(self):
-        self.wd.find_element(By.LINK_TEXT, "Logout").click()
-        self.wd.find_element(By.CSS_SELECTOR, "html").click()
 
     def return_to_groups_page(self):
-        self.wd.find_element(By.LINK_TEXT, "group page").click()
+        self.wd.get("https://localhost/addressbook/group.php")
 
     def create_group(self, group):
         self.open_groups_page()
@@ -30,12 +29,6 @@ class Application:
     def open_groups_page(self):
         self.wd.find_element(By.LINK_TEXT, "groups").click()
 
-    def login(self, username, password):
-        self.open_home_page()
-        self.wd.find_element(By.NAME, "user").click()
-        self.wd.find_element(By.NAME, "user").send_keys(username)
-        self.wd.find_element(By.NAME, "pass").send_keys(password)
-        self.wd.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
 
     def open_home_page(self):
         self.wd.get("https://localhost/addressbook/")
@@ -43,3 +36,4 @@ class Application:
 
     def destroy(self):
         self.wd.quit()
+
