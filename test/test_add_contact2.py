@@ -13,3 +13,11 @@ def test_add_contact(app):
                     homepage="https://software-testing.ru/"))
     app.contact.back_to_homepage()
     app.session.logout()
+
+def test_add_empty_contact(app):
+    app.open_home_page()
+    app.session.login(username="admin", password="secret")
+    app.contact.add_new_contact()
+    app.contact.submit()
+    app.contact.back_to_homepage()
+    app.session.logout()

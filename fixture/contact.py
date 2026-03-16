@@ -41,3 +41,6 @@ class ContactHelper:
         self.app.wd.find_element(By.CSS_SELECTOR, "select:nth-child(64) > option:nth-child(6)").click()
         self.app.wd.find_element(By.NAME, "ayear").send_keys("2021")
         self.app.wd.find_element(By.CSS_SELECTOR, "input:nth-child(71)").click()
+
+    def submit(self):
+        self.app.wd.find_element(By.NAME, "submit").click()
