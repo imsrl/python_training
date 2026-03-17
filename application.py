@@ -27,6 +27,7 @@ class Application:
         self.wd.find_element(By.NAME, "submit").click()
         self.return_to_groups_page()
 
+
     def open_groups_page(self):
         self.wd.find_element(By.LINK_TEXT, "groups").click()
 
