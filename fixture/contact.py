@@ -44,3 +44,13 @@ class ContactHelper:
 
     def submit(self):
         self.app.wd.find_element(By.NAME, "submit").click()
+
+    def delete_first_contact(self):
+        self.app.wd.find_element(By.NAME, "selected[]").click()
+        self.app.wd.find_element(By.NAME, "delete").click()
+
+    def edit_first_contact(self):
+        self.app.wd.find_element(By.NAME, "Edit").click()
+
+    def update(self):
+        self.app.wd.find_element(By.NAME, "update").click()
