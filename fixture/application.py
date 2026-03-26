@@ -6,7 +6,6 @@ from fixture.contact import ContactHelper
 
 class Application:
     def __init__(self):
-        print("Application __init__", id(self))
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(5)
         self.vars = {}

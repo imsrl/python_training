@@ -5,10 +5,24 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    def open_addressbook(self):
+        self.app.wd.get("https://localhost/addressbook/")
+
     def back_to_homepage(self):
         self.app.wd.find_element(By.LINK_TEXT, "home page").click()
 
-    def add_new_contact(self):
+
+    def add_new_contact(self, new_contact_data):
+        self.open_addressbook()
+        self.button_add_new()
+        # fill contact information
+        self.fill_contact(new_contact_data)
+        self.fill_dropdown_menu()
+        # submit creation
+        self.submit()
+        self.back_to_homepage()
+
+    def button_add_new(self):
         self.app.wd.find_element(By.LINK_TEXT, "add new").click()
 
     def fill_dropdown_menu(self):
@@ -31,28 +45,41 @@ class ContactHelper:
         self.app.wd.find_element(By.NAME, "submit").click()
 
     def delete_first_contact(self):
+        self.open_addressbook()
         self.app.wd.find_element(By.NAME, "selected[]").click()
         self.app.wd.find_element(By.NAME, "delete").click()
+        self.back_to_homepage()
 
-    def edit_first_contact(self):
-        #        self.app.wd.find_element(By.NAME, "Edit").click()
+    def modify_first_contact(self, new_contact_data):
+        # self.app.wd.find_element(By.NAME, "Edit").click()
+        self.open_addressbook()
+        # select first contact
         self.app.wd.find_element(By.CSS_SELECTOR, "tr:nth-child(2) > .center:nth-child(8) img").click()
+        self.fill_contact(new_contact_data)
+        self.update_button()
+        self.back_to_homepage()
 
     def fill_contact(self, contact):
-        self.app.wd.find_element(By.NAME, "firstname").send_keys(contact.firstname)
-        self.app.wd.find_element(By.NAME, "middlename").send_keys(contact.middlename)
-        self.app.wd.find_element(By.NAME, "lastname").send_keys(contact.lastname)
-        self.app.wd.find_element(By.NAME, "nickname").send_keys(contact.nickname)
-        self.app.wd.find_element(By.NAME, "title").send_keys(contact.title)
-        self.app.wd.find_element(By.NAME, "company").send_keys(contact.company)
-        self.app.wd.find_element(By.NAME, "address").send_keys(contact.address)
-        self.app.wd.find_element(By.NAME, "home").send_keys(contact.home)
-        self.app.wd.find_element(By.NAME, "mobile").send_keys(contact.mobile)
-        self.app.wd.find_element(By.NAME, "work").send_keys(contact.work)
-        self.app.wd.find_element(By.NAME, "email").send_keys(contact.email)
-        self.app.wd.find_element(By.NAME, "email2").send_keys(contact.email2)
-        self.app.wd.find_element(By.NAME, "email3").send_keys(contact.email3)
-        self.app.wd.find_element(By.NAME, "homepage").send_keys(contact.homepage)
+        self.change_contact_field_value("firstname", contact.firstname)
+        self.change_contact_field_value("middlename", contact.middlename)
+        self.change_contact_field_value("lastname", contact.lastname)
+        self.change_contact_field_value("nickname", contact.nickname)
+        self.change_contact_field_value("title", contact.title)
+        self.change_contact_field_value("company", contact.company)
+        self.change_contact_field_value("address", contact.address)
+        self.change_contact_field_value("home", contact.home)
+        self.change_contact_field_value("mobile", contact.mobile)
+        self.change_contact_field_value("work", contact.work)
+        self.change_contact_field_value("email", contact.email)
+        self.change_contact_field_value("email2", contact.email2)
+        self.change_contact_field_value("email3", contact.email3)
+        self.change_contact_field_value("homepage", contact.homepage)
+
+    def change_contact_field_value(self, field_name, text):
+        if text is not None:
+            self.app.wd.find_element(By.NAME, field_name).click()
+            self.app.wd.find_element(By.NAME, field_name).clear()
+            self.app.wd.find_element(By.NAME, field_name).send_keys(text)
 
     def update_button(self):
         self.app.wd.find_element(By.NAME, "update").click()

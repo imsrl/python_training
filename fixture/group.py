@@ -7,7 +7,7 @@ class GroupHelper:
         self.app = app
 
     def return_to_groups_page(self):
-#        self.app.wd.get("https://localhost/addressbook/group.php")
+#       self.app.wd.get("https://localhost/addressbook/group.php")
         self.app.wd.find_element(By.LINK_TEXT, "group page").click()
 
     def create(self, group):
@@ -40,7 +40,6 @@ class GroupHelper:
         # submit deletion
         self.app.wd.find_element(By.NAME, "delete").click()
         self.app.wd.find_element(By.LINK_TEXT, "group page").click()
-        self.return_to_groups_page()
 
     def select_first_group(self):
         # select first group
