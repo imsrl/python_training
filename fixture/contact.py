@@ -5,15 +5,19 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def open_addressbook(self):
-        self.app.wd.get("https://localhost/addressbook/")
+    def open_homepage(self):
+        if self.app.wd.current_url.endswith("addressbook/") or self.app.wd.current_url.endswith("/index.php"):
+            return
+        else:
+            self.app.wd.get("https://localhost/addressbook/")
+
 
     def back_to_homepage(self):
         self.app.wd.find_element(By.LINK_TEXT, "home page").click()
 
 
     def add_new_contact(self, new_contact_data):
-        self.open_addressbook()
+        self.open_homepage()
         self.button_add_new()
         # fill contact information
         self.fill_contact(new_contact_data)
@@ -45,14 +49,13 @@ class ContactHelper:
         self.app.wd.find_element(By.NAME, "submit").click()
 
     def delete_first_contact(self):
-        self.open_addressbook()
+        self.open_homepage()
         self.app.wd.find_element(By.NAME, "selected[]").click()
         self.app.wd.find_element(By.NAME, "delete").click()
         self.back_to_homepage()
 
     def modify_first_contact(self, new_contact_data):
-        # self.app.wd.find_element(By.NAME, "Edit").click()
-        self.open_addressbook()
+        self.open_homepage()
         # select first contact
         self.app.wd.find_element(By.CSS_SELECTOR, "tr:nth-child(2) > .center:nth-child(8) img").click()
         self.fill_contact(new_contact_data)
@@ -85,5 +88,5 @@ class ContactHelper:
         self.app.wd.find_element(By.NAME, "update").click()
 
     def count(self):
-        self.open_addressbook()
+        self.open_homepage()
         return len(self.app.wd.find_elements(By.NAME, "selected[]"))
