@@ -83,3 +83,7 @@ class ContactHelper:
 
     def update_button(self):
         self.app.wd.find_element(By.NAME, "update").click()
+
+    def count(self):
+        self.open_addressbook()
+        return len(self.app.wd.find_elements(By.NAME, "selected[]"))
