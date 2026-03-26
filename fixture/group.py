@@ -7,7 +7,8 @@ class GroupHelper:
         self.app = app
 
     def return_to_groups_page(self):
-        self.app.wd.get("https://localhost/addressbook/group.php")
+#        self.app.wd.get("https://localhost/addressbook/group.php")
+        self.app.wd.find_element(By.LINK_TEXT, "group page").click()
 
     def create(self, group):
         self.open_groups_page()

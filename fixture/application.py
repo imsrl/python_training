@@ -6,8 +6,9 @@ from fixture.contact import ContactHelper
 
 class Application:
     def __init__(self):
+        print("Application __init__", id(self))
         self.wd = webdriver.Firefox()
-        self.wd.implicitly_wait(3)
+        self.wd.implicitly_wait(5)
         self.vars = {}
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
@@ -15,7 +16,7 @@ class Application:
 
     def is_valid(self):
         try:
-            self.wd.current_url()
+            self.wd.current_url
             return True
         except:
             return False
