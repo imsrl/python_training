@@ -39,6 +39,7 @@ class GroupHelper:
         # submit deletion
         self.app.wd.find_element(By.NAME, "delete").click()
         self.app.wd.find_element(By.LINK_TEXT, "group page").click()
+        self.return_to_groups_page()
 
     def select_first_group(self):
         # select first group
@@ -53,3 +54,4 @@ class GroupHelper:
         self.fill_group_form(new_group_data)
         # submit modification
         self.app.wd.find_element(By.NAME, "update").click()
+        self.return_to_groups_page()

@@ -13,6 +13,14 @@ class Application:
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
 
+    def is_valid(self):
+        try:
+            self.wd.current_url()
+            return True
+        except:
+            return False
+
+
     def open_home_page(self):
         self.wd.get("https://localhost/addressbook/")
         self.wd.set_window_size(1006, 892)
