@@ -19,7 +19,6 @@ class Application:
         except:
             return False
 
-
     def open_home_page(self):
         self.wd.get("https://localhost/addressbook/")
         self.wd.set_window_size(1006, 892)

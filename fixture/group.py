@@ -32,7 +32,7 @@ class GroupHelper:
             self.app.wd.find_element(By.NAME, field_name).send_keys(text)
 
     def open_groups_page(self):
-        if not(self.app.wd.current_url.endswith("/groups.php") and len(self.app.wd.find_elements(By.NAME, "new"))):
+        if not (self.app.wd.current_url.endswith("/groups.php") and len(self.app.wd.find_elements(By.NAME, "new") > 0)):
             self.app.wd.find_element(By.LINK_TEXT, "groups").click()
 
     def delete_first_group(self):
