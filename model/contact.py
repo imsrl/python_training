@@ -16,3 +16,9 @@ class ContactInfo:
         self.email3 = email3
         self.homepage = homepage
         self.id = id
+
+    def __repr__(self):
+        return "%s:%s" % (self.id, self.lastname)
+
+    def __eq__(self, other):
+        return self.id == other.id and self.lastname == other.lastname
