@@ -50,16 +50,24 @@ class ContactHelper:
         self.app.wd.find_element(By.NAME, "submit").click()
 
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         self.open_homepage()
-        self.app.wd.find_element(By.NAME, "selected[]").click()
+        self.select_contact_by_index(index)
         self.app.wd.find_element(By.NAME, "delete").click()
         self.back_to_homepage()
         self.contact_cache = None
 
-    def modify_first_contact(self, new_contact_data):
+    def select_contact_by_index(self, index):
+        self.app.wd.find_elements(By.NAME, "selected[]")[index].click()
+
+    def select_first_contact(self):
+        self.app.wd.find_element(By.NAME, "selected[]").click()
+
+    def modify_contact_by_index(self, index, new_contact_data):
         self.open_homepage()
-        # select first contact
-        self.app.wd.find_element(By.CSS_SELECTOR, "tr:nth-child(2) > .center:nth-child(8) img").click()
+        self.app.wd.find_elements(By.XPATH, "//img[@alt=\'Edit\']")[index].click()
         self.fill_contact(new_contact_data)
         self.update_button()
         self.back_to_homepage()
