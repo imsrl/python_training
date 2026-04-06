@@ -67,7 +67,7 @@ class ContactHelper:
 
     def modify_contact_by_index(self, index, new_contact_data):
         self.open_homepage()
-        self.app.wd.find_elements(By.XPATH, "//img[@alt=\'Edit\']")[index].click()
+        self.app.wd.find_elements(By.XPATH, '//img[@alt="Edit"]')[index].click()
         self.fill_contact(new_contact_data)
         self.update_button()
         self.back_to_homepage()
