@@ -20,7 +20,8 @@ class Application:
             return False
 
     def open_home_page(self):
-        self.wd.get("https://localhost/addressbook/")
+        # дома поменять обратно
+        self.wd.get("https://localhost/addressbook/addressbook/")
         self.wd.set_window_size(1006, 892)
 
     def destroy(self):

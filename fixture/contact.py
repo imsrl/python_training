@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
 from model.contact import ContactInfo
+import re
+
 
 class ContactHelper:
     def __init__(self, app):
@@ -9,7 +11,8 @@ class ContactHelper:
         if self.app.wd.current_url.endswith("addressbook/") or self.app.wd.current_url.endswith("/index.php"):
             return
         else:
-            self.app.wd.get("https://localhost/addressbook/")
+            # дома поменять обратно
+            self.app.wd.get("https://localhost/addressbook/addressbook/")
 
 
     def back_to_homepage(self):
@@ -67,11 +70,15 @@ class ContactHelper:
 
     def modify_contact_by_index(self, index, new_contact_data):
         self.open_homepage()
-        self.app.wd.find_elements(By.XPATH, '//img[@alt="Edit"]')[index].click()
+        self.open_contact_to_edit_by_index(index)
         self.fill_contact(new_contact_data)
         self.update_button()
         self.back_to_homepage()
         self.contact_cache = None
+
+    def open_contact_to_edit_by_index(self, index):
+        self.open_homepage()
+        self.app.wd.find_elements(By.XPATH, '//img[@alt="Edit"]')[index].click()
 
     def fill_contact(self, contact):
         self.change_contact_field_value("firstname", contact.firstname)
@@ -113,5 +120,33 @@ class ContactHelper:
                 id = element.find_element(By.NAME, "selected[]").get_attribute("value")
                 lastname = cells[1].text
                 firstname = cells[2].text
-                self.contact_cache.append(ContactInfo(lastname=lastname, firstname=firstname, id=id))
+                all_phones = cells[5].text.splitlines()
+                self.contact_cache.append(ContactInfo(lastname=lastname, firstname=firstname, id=id, homephone=all_phones[0], mobilephone=all_phones[1], workphone=all_phones[2]))
         return list(self.contact_cache)
+
+
+
+    def open_contact_view_by_index(self, index):
+        self.open_homepage()
+        row = self.app.wd.find_elements(By.NAME, "entry")[index]
+        cell = row.find_elements(By.TAG_NAME, "td")[6]
+        cell.find_element(By.TAG_NAME, "a").click()
+
+    def get_contact_info_from_edit_page(self, index):
+        self.open_contact_to_edit_by_index(index)
+        firstname = self.app.wd.find_element(By.NAME, "firstname").get_attribute("value")
+        lastname = self.app.wd.find_element(By.NAME, "lastname").get_attribute("value")
+        id = self.app.wd.find_element(By.NAME, "id").get_attribute("value")
+        homephone = self.app.wd.find_element(By.NAME, "home").get_attribute("value")
+        workphone = self.app.wd.find_element(By.NAME, "work").get_attribute("value")
+        mobilephone = self.app.wd.find_element(By.NAME, "mobile").get_attribute("value")
+        return ContactInfo(firstname=firstname, lastname=lastname, id=id, homephone=homephone,
+                           workphone=workphone, mobilephone=mobilephone)
+
+    def get_contact_from_view_page(self, index):
+        self.open_contact_view_by_index(index)
+        text = self.app.wd.find_element(By.ID, "content").text
+        homephone = re.search("H: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        mobilephone = re.search("M: (.*)", text).group(1)
+        return ContactInfo(homephone=homephone, workphone=workphone, mobilephone=mobilephone)
