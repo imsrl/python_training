@@ -44,7 +44,7 @@ class GroupHelper:
         self.select_group_by_index(index)
         # submit deletion
         self.app.wd.find_element(By.NAME, "delete").click()
-        self.app.wd.find_element(By.LINK_TEXT, "group page").click()
+        self.return_to_groups_page()
         self.group_cache = None
 
     def select_first_group(self):

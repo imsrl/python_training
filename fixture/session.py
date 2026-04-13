@@ -35,4 +35,4 @@ class SessionHelper:
 
     def logout(self):
         self.app.wd.find_element(By.LINK_TEXT, "Logout").click()
-        self.app.wd.find_element(By.CSS_SELECTOR, "html").click()
+        #self.app.wd.find_element(By.CSS_SELECTOR, "html").click()

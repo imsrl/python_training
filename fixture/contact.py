@@ -12,7 +12,7 @@ class ContactHelper:
             return
         else:
             # дома поменять обратно
-            self.app.wd.get("https://localhost/addressbook/addressbook/")
+            self.app.wd.get("http://localhost/addressbook/addressbook/")
 
 
     def back_to_homepage(self):
