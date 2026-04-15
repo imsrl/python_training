@@ -12,7 +12,8 @@ class ContactHelper:
             return
         else:
             # дома поменять обратно
-            self.app.wd.get("http://localhost/addressbook/addressbook/")
+            #self.app.wd.get("http://localhost/addressbook/addressbook/")
+            self.app.wd.find_element(By.LINK_TEXT, "home").click()
 
 
     def back_to_homepage(self):
