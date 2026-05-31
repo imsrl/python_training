@@ -63,8 +63,18 @@ class ContactHelper:
         self.back_to_homepage()
         self.contact_cache = None
 
+    def delete_contact_by_id(self, id):
+        self.open_homepage()
+        self.select_contact_by_id(id)
+        self.app.wd.find_element(By.NAME, "delete").click()
+        self.back_to_homepage()
+        self.contact_cache = None
+
     def select_contact_by_index(self, index):
         self.app.wd.find_elements(By.NAME, "selected[]")[index].click()
+
+    def select_contact_by_id(self, id):
+        self.app.wd.find_element(By.CSS_SELECTOR, "input[value='%s']" % id).click()
 
     def select_first_contact(self):
         self.app.wd.find_element(By.NAME, "selected[]").click()
@@ -77,9 +87,21 @@ class ContactHelper:
         self.back_to_homepage()
         self.contact_cache = None
 
+    def modify_contact_by_id(self, id, new_contact_data):
+        self.open_homepage()
+        self.open_contact_to_edit_by_id(id)
+        self.fill_contact(new_contact_data)
+        self.update_button()
+        self.back_to_homepage()
+        self.contact_cache = None
+
     def open_contact_to_edit_by_index(self, index):
         self.open_homepage()
         self.app.wd.find_elements(By.XPATH, '//img[@alt="Edit"]')[index].click()
+
+    def open_contact_to_edit_by_id(self, id):
+        self.open_homepage()
+        self.app.wd.find_element(By.XPATH, '//a[@href="edit.php?id=%s"]' % id).click()
 
     def fill_contact(self, contact):
         self.change_contact_field_value("firstname", contact.firstname)

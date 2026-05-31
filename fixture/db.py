@@ -1,5 +1,6 @@
 import pymysql.cursors
 from model.group import Group
+from model.contact import ContactInfo
 
 
 class DbFixture:
@@ -12,13 +13,31 @@ class DbFixture:
         self.connection = pymysql.connect(host=host, database=name, user=user, password=password, autocommit=True)
 
     def get_group_list(self):
-        list =[]
+        list = []
         cursor = self.connection.cursor()
         try:
             cursor.execute("select group_id, group_name, group_header, group_footer from group_list")
             for row in cursor:
                 (id, name, header, footer) = row
-                list.append(Group(id=str(id),name=name, header=header, footer=footer))
+                list.append(Group(id=str(id), name=name, header=header, footer=footer))
+        finally:
+            cursor.close()
+        return list
+
+    def get_contact_list(self):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(
+                "select id, firstname, middlename, lastname, nickname, company, title, address, home, mobile, "
+                "work, email, email2, email3, homepage from addressbook")
+            for row in cursor:
+                (id, firstname, middlename, lastname, nickname, company, title, address, home, mobile,
+                 work, email, email2, email3, homepage) = row
+                list.append(ContactInfo(id=str(id), firstname=firstname, middlename=middlename, lastname=lastname,
+                                        nickname=nickname, company=company, title=title, address=address, homephone=home,
+                                        mobilephone=mobile, workphone=work, email=email, email2=email2, email3=email3,
+                                        homepage=homepage))
         finally:
             cursor.close()
         return list
