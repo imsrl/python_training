@@ -44,5 +44,36 @@ class DbFixture:
             cursor.close()
         return list
 
+    def get_home_page_contacts(self):
+        contacts = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute(
+                "select id, firstname, lastname, address, home, mobile, work, email, email2, email3 "
+                "from addressbook where deprecated is Null"
+            )
+
+            for row in cursor:
+                (id, firstname, lastname, address, home, mobile, work, email, email2, email3) = row
+
+                phone_list = [home, mobile, work]
+                email_list = [email, email2, email3]
+
+                all_phones = "\n".join([phone for phone in phone_list if phone])
+                all_emails = "\n".join([mail for mail in email_list if mail])
+
+                contacts.append(ContactInfo(
+                    id=str(id),
+                    firstname=firstname.strip() if firstname else "",
+                    lastname=lastname.strip() if lastname else "",
+                    address=address,
+                    all_phones_from_home_page=all_phones,
+                    all_emails_from_home_page=all_emails
+                ))
+        finally:
+            cursor.close()
+
+        return contacts
+
     def destroy(self):
         self.connection.close()
