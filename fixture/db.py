@@ -24,13 +24,15 @@ class DbFixture:
             cursor.close()
         return list
 
+
     def get_contact_list(self):
         list = []
         cursor = self.connection.cursor()
         try:
             cursor.execute(
                 "select id, firstname, middlename, lastname, nickname, company, title, address, home, mobile, "
-                "work, email, email2, email3, homepage from addressbook")
+                "work, email, email2, email3, homepage from addressbook where deprecated is Null")
+            #0000-00-00 00:00:00
             for row in cursor:
                 (id, firstname, middlename, lastname, nickname, company, title, address, home, mobile,
                  work, email, email2, email3, homepage) = row
